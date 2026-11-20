@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src blob:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex,nofollow">
+<title>Every Turn: what your agent is told every turn</title>
+<link rel="stylesheet" href="./src/styles.css">
+<script type="module" src="./src/main.ts"></script>
+</head>
+<body>
+<a class="skip" href="#poster">Skip to poster</a>
+
+<header class="wrap">
+  <div class="mast">
+    <span class="mark" role="img" aria-label="everyturn" dir="ltr"><i aria-hidden="true"><span></span><span></span><span></span><span></span></i><span aria-hidden="true">every<b>turn</b></span></span>
+    <span class="ver" id="ver-top"><bdi>Preview 0.1.0</bdi></span>
+  </div>
+</header>
+
+<main class="wrap">
+ <div class="grid">
+  <div class="col-in">
+    <h1>What your agent is told every turn</h1>
+    <p class="lede">See how many tokens your agent’s instruction files add before you type, and which rules repeat or contradict.</p>
+    <p class="privacy">Runs in your browser. Nothing is uploaded. Don’t paste secrets anyway.</p>
+
+    <section id="sources" aria-labelledby="h-sources">
+      <div class="sec"><h2 id="h-sources">Sources</h2></div>
+
+      <!-- Two headings in the DOM, one shown: the pointer line by default, the touch line under (pointer: coarse), the drag line while a drag is over the page.
+           Hidden spans are display:none, so the accessible name is exactly what is shown. -->
+      <div class="drop" id="drop" role="group" aria-labelledby="drop-h">
+        <p class="drop-h" id="drop-h"><span class="when-pointer">Drop your repo folder</span><span class="when-touch">Choose your repo folder</span><span class="when-drag" id="drag-text">Drop to add files</span></p>
+        <button class="btn" type="button" id="pick-dir"><bdi>Choose folder…</bdi></button>
+      </div>
+      <p class="sample-line"><button class="link" type="button" id="sample">Try the sample setup</button></p>
+      <input type="file" id="file-input" multiple hidden tabindex="-1" aria-hidden="true">
+      <input type="file" id="dir-input" multiple hidden tabindex="-1" aria-hidden="true">
+
+      <div class="agent-row">
+        <label for="agent">Agent</label>
+        <span class="sel"><select id="agent"></select></span>
+      </div>
+
+      <details class="paste" id="paste">
+        <summary>Paste one file instead</summary>
+        <div class="paste-body">
+          <div class="field">
+            <label for="fpath">File path</label>
+            <input id="fpath" class="mono" type="text" dir="ltr" placeholder="CLAUDE.md" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="fpath-err">
+            <p class="field-err" id="fpath-err" hidden></p>
+          </div>
+          <div class="field nomargin">
+            <label for="ftext">Contents</label>
+            <textarea id="ftext" dir="auto" spellcheck="false" placeholder="Paste the file’s text here" aria-describedby="ftext-err"></textarea>
+            <p class="field-err" id="ftext-err" hidden></p>
+          </div>
+          <div class="paste-actions">
+            <button class="btn" type="button" id="add">Add file</button>
+            <button class="btn" type="button" id="pick"><bdi>Choose files…</bdi></button>
+          </div>
+        </div>
+      </details>
+
+      <div class="files" id="files" hidden>
+        <div class="head"><span class="lbl" id="files-h">Files</span><span class="count" id="files-count"></span><button class="link small" type="button" id="clear">Remove all</button></div>
+        <ul aria-labelledby="files-h" id="file-list"></ul>
+        <div class="more"><button class="link small" type="button" id="more" aria-expanded="false" aria-controls="file-list" hidden></button></div>
+      </div>
+
+      <div class="alert" id="alert" role="alert" hidden></div>
+
+      <div class="actions">
+        <button class="btn primary" type="button" id="render" aria-keyshortcuts="Control+Enter Meta+Enter">Render poster</button>
+        <span class="kbd" id="kbd" aria-hidden="true" dir="ltr">Ctrl Enter</span>
+      </div>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+      <p class="footnote">Up to <bdi class="num">256&nbsp;KiB</bdi> a file and <bdi class="num">5&nbsp;MiB</bdi> in all. A <bdi>SKILL.md</bdi> over that is read up to its first <bdi class="num">64&nbsp;KiB</bdi>. <bdi class="mono">.env</bdi> files are never read.</p>
+    </section>
+  </div>
+
+  <section class="col-out" id="poster" tabindex="-1" aria-labelledby="h-poster">
+    <div class="sec"><h2 id="h-poster" tabindex="-1">Poster</h2><span class="meta">PNG · <bdi class="num">1600 × 2000</bdi></span></div>
+    <p class="frame-label"><span class="mono" id="cap-l">Sample · synthetic data</span><span id="cap-r"></span></p>
+    <div class="frame" id="frame"></div>
+    <div id="out" hidden>
+      <div class="out-controls">
+        <div class="field" id="finding-field">
+          <label for="finding">Finding shown on the poster</label>
+          <span class="sel"><select id="finding"></select></span>
+        </div>
+        <div class="dl">
+          <button class="btn" type="button" id="png">Download PNG</button>
+          <span class="also">Also as <button class="link" type="button" id="svg">SVG</button><button class="link" type="button" id="json">JSON</button></span>
+        </div>
+        <p class="note">Made on this device. Look over the image for anything private before you post it. Redaction is best effort; see “Known redaction limits” in the README.</p>
+      </div>
+    </div>
+  </section>
+ </div>
+</main>
+
+<footer class="wrap">
+  <div class="foot">
+    <div class="l1">
+      <span class="mark" role="img" aria-label="everyturn" dir="ltr"><i aria-hidden="true"><span></span><span></span><span></span><span></span></i><span aria-hidden="true">every<b>turn</b></span></span>
+      <bdi class="handle">@OrMiz</bdi>
+    </div>
+    <p>Static scan, not a recording of a live turn. Tokens are estimated (UTF-8 bytes ÷ <bdi class="num">4</bdi>). Conflicts are heuristic; check the evidence.</p>
+    <p class="v" id="ver-foot"><bdi>everyturn 0.1.0 · Claude Code profile 0.1</bdi></p>
+  </div>
+</footer>
+<noscript><p class="wrap noscript">This page needs JavaScript. It runs in your browser and nothing is uploaded.</p></noscript>
+</body>
+</html>

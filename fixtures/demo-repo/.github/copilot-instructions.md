@@ -1,0 +1,2 @@
+- This is a TypeScript monorepo using npm workspaces.
+- Use Vitest for tests.

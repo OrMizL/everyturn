@@ -1,0 +1,6 @@
+---
+description: General rules
+alwaysApply: true
+---
+- Always run `npm test` before committing.
+- Keep pull requests small: one concern per PR.

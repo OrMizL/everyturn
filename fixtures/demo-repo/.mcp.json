@@ -1,0 +1,6 @@
+{
+  "mcpServers": {
+    "docs": { "command": "npx", "args": ["-y", "demo-docs-mcp"] },
+    "tracker": { "type": "http", "url": "https://tracker.example.com/mcp" }
+  }
+}

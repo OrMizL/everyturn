@@ -1,0 +1,1 @@
+Every Turn web page: a static, client-side page that builds the poster in the browser. Files are read locally and never uploaded (the Content Security Policy sets `connect-src 'none'`). See the **Web page** section of the root README.

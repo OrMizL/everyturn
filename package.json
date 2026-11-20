@@ -1,0 +1,39 @@
+{
+  "name": "everyturn-workspace",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "test": "vitest run",
+    "privacy-scan": "node scripts/privacy-scan.mjs --artifacts out",
+    "lint": "eslint .",
+    "build": "npm run build -w apps/web",
+    "web-shot": "node scripts/web-shot.mjs",
+    "gate": "npm run typecheck && npm run lint && npm run build && npm test && npm run privacy-scan && echo 'GATE PASS'",
+    "everyturn": "node --import tsx packages/cli/src/index.ts",
+    "demo": "node --import tsx packages/cli/src/index.ts fixtures/demo-repo --agent claude-code --dataset sample --out out/demo --allow-out-in-repo --overwrite && node scripts/screenshot.mjs out/demo/everyturn-sources.html out/demo/sources.png 1200 820",
+    "render-check": "node scripts/privacy-scan.mjs --render-check --artifacts out",
+    "web-accept": "node scripts/web-acceptance.mjs",
+    "gate:full": "npm run gate && npm run demo && npm run web-shot && npm run web-accept && npm run privacy-scan && npm run render-check",
+    "pack-check": "bash scripts/pack-check.sh"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@types/node": "^22.20.5",
+    "esbuild": "^0.28.2",
+    "eslint": "^9.39.5",
+    "globals": "^17.14.0",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.73.0",
+    "vitest": "^3.2.7"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "everyturn",
+  "version": "0.1.0",
+  "description": "A poster of the instructions your AI coding agent loads on every turn, built locally from your repo.",
+  "keywords": [
+    "claude-code",
+    "codex",
+    "cursor",
+    "copilot",
+    "windsurf",
+    "agents",
+    "claude-md",
+    "agents-md"
+  ],
+  "type": "module",
+  "bin": {
+    "everyturn": "dist/everyturn.js"
+  },
+  "files": [
+    "dist/",
+    "assets/"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OrMizL/everyturn.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/OrMizL/everyturn#readme",
+  "bugs": {
+    "url": "https://github.com/OrMizL/everyturn/issues"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "node build.mjs",
+    "prepack": "node build.mjs",
+    "postpack": "node build.mjs --clean"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "2.6.2"
+  }
+}

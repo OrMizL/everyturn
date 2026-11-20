@@ -1,0 +1,6 @@
+---
+description: General rules
+alwaysApply: true
+---
+- Keep pull requests small: one concern per PR.
+- Never log request bodies.
